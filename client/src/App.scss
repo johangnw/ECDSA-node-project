@@ -3,6 +3,11 @@ body {
   font-weight: 300;
   background-color: #e2e8f0;
   padding: 40px;
+  color:#f4f6f8;
+}
+
+.title{
+  
 }
 
 label {
@@ -11,7 +16,7 @@ label {
   letter-spacing: 0.05rem;
   font-size: .8em;
   font-weight: 400;
-  color: #222;
+  color: #f4f6f8;
 }
 
 .app {
@@ -25,7 +30,7 @@ label {
 .container {
   flex-grow: 1;
   margin: 0 20px;
-  background-color: #fff;
+  background-color: #3b3a3a;
   border: 1px solid #cbd5e0;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   border-radius: 0.375rem;
@@ -47,6 +52,7 @@ input {
   background-color: #fdfdfe;
   padding-inline-start: 0.75rem;
   font-size: 0.875rem;
+  color:#3b3a3a;
 }
 
 .button {
@@ -54,7 +60,8 @@ input {
   border-radius: 0.125rem;
   padding: 10px 20px;
   color: white;
-  display: inline-flex;
+  
+  // display: inline-flex;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: 400;
@@ -76,6 +83,7 @@ input {
     display: inline-flex;
     margin-top: 10px;
     padding: 0.75rem;
+    color: #3b3a3a;
     background-color: #f4f6f8;
   }
 }
@@ -83,4 +91,8 @@ input {
 .transfer {
   display: flex;
   flex-direction: column;
+}
+
+.address{
+  margin: 5px 0;
 }

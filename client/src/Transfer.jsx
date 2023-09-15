@@ -1,7 +1,10 @@
 import { useState } from "react";
 import server from "./server";
+import { utf8ToBytes, toHex } from 'ethereum-cryptography/utils';
+import * as keccak from 'ethereum-cryptography/keccak';
+import * as secp from 'ethereum-cryptography/secp256k1';
 
-function Transfer({ address, setBalance }) {
+function Transfer({ address, setBalance, privateKey }) {
   const [sendAmount, setSendAmount] = useState("");
   const [recipient, setRecipient] = useState("");
 
@@ -10,23 +13,33 @@ function Transfer({ address, setBalance }) {
   async function transfer(evt) {
     evt.preventDefault();
 
+    const dataToSend = {
+      sender: address,
+      amount: parseInt(sendAmount),
+      recipient,
+    }
+
+    const bytes = utf8ToBytes(JSON.stringify(dataToSend));
+    const hashMsg = toHex(keccak.keccak256(bytes));
+    const recoveredBit = secp.secp256k1.sign(hashMsg, privateKey);
+    console.log(recoveredBit);
+    dataToSend.hash = hashMsg;
+    dataToSend.recoveredBit = recoveredBit.toDERHex();
+
     try {
       const {
         data: { balance },
-      } = await server.post(`send`, {
-        sender: address,
-        amount: parseInt(sendAmount),
-        recipient,
-      });
+      } = await server.post(`send`, dataToSend);
       setBalance(balance);
     } catch (ex) {
+      console.log(ex);
       alert(ex.response.data.message);
     }
   }
 
   return (
     <form className="container transfer" onSubmit={transfer}>
-      <h1>Send Transaction</h1>
+      <h1 className="title">Send Transaction</h1>
 
       <label>
         Send Amount
